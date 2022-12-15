@@ -16,7 +16,7 @@ class MenuActivity : AppCompatActivity()
     private lateinit var hora:String
     var binding:ActivityMenuBinding? = null
     var base: MiBDOpenHelper? = null
-    var cat = "Todas"
+    var lista: ArrayList<Producto> = ArrayList(listaProductos)
     private lateinit var adapterProductos: MenuAdaptador
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -57,39 +57,38 @@ class MenuActivity : AppCompatActivity()
         val recyclerView = binding?.recyclerView
         recyclerView?.layoutManager = LinearLayoutManager(this)
 
-        var productos:ArrayList<Producto> = ArrayList()
-
-        if(cat.equals("Todas"))
-        {
-            productos = ArrayList(listaProductos)
-        }
-        else
-        {
-            for (producto in listaProductos)
-            {
-                if (producto.categoria.equals(cat))
-                {
-                    productos.add(producto)
-                }
-            }
-        }
-
         adapterProductos = MenuAdaptador(
             onClickListener = { pos -> dameID(pos) }
         )
 
-        adapterProductos.MenuAdaptador(this,  productos)
+        adapterProductos.MenuAdaptador(this,  lista)
 
         recyclerView?.adapter = adapterProductos
     }
 
     fun filtrar()
     {
-        cat = binding?.spinner?.selectedItem.toString()
+        val categoria = binding?.spinner?.selectedItem.toString()
+
+        val lista = ArrayList<Producto>()
+
+        if (categoria != "Todas")
+        {
+            for (p in DataProvider.listaProductos)
+            {
+                if (p.categoria == categoria)
+                {
+                    lista.add(p)
+                }
+            }
+            adapterProductos.productos = ArrayList(lista)
+        }
+        else
+        {
+            adapterProductos.productos = ArrayList(listaProductos)
+        }
 
         adapterProductos.notifyDataSetChanged()
-
-        iniciarRecicler()
     }
 
 

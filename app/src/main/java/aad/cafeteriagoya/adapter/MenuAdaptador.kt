@@ -12,7 +12,7 @@ class MenuAdaptador(
 ): RecyclerView.Adapter<ProductoViewHolder>()
 {
     private lateinit var context: Context
-    private lateinit var productos: ArrayList<Producto>
+    lateinit var productos: ArrayList<Producto>
 
     fun MenuAdaptador(context: Context, productos: ArrayList<Producto>)
     {
