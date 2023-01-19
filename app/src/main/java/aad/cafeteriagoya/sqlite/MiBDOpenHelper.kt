@@ -3,6 +3,7 @@ package aad.cafeteriagoya.sqlite
 import aad.cafeteriagoya.entidades.Producto
 import android.content.ContentValues
 import android.content.Context
+import android.content.LocusId
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -15,25 +16,23 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     companion object {
         val DATABASE_VERSION = 1
-        val DATABASE_NAME = "productos.db"
-        val T_PRODUCTOS = "productos"
-        val PRODUCTO_INSERCION_ID = "id_insercion_producto"
-        val PRODUCTO_ID = "id_producto"
-        val PRODUCTO_NOMBRE = "nombre"
-        val PRODUCTO_PRECIO = "precio"
-        val PRODUCTO_CATEGORIA = "categoria"
+        val DATABASE_NAME = "pedidos.db"
+        val T_PRODUCTOS = "pedidos"
+        val PRODUCTO_INSERCION_ID = "id_compra"
+        val PRODUCTO_ID = "fecha"
+        val PRODUCTO_NOMBRE = "total"
+        val PRODUCTO_PRECIO = "id_productos"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         var crearTablaPorductos = "CREATE TABLE $T_PRODUCTOS " +
                 "($PRODUCTO_INSERCION_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$PRODUCTO_ID INTEGER, " +
-                "$PRODUCTO_NOMBRE TEXT," +
-                "$PRODUCTO_PRECIO DOUBLE," +
-                "$PRODUCTO_CATEGORIA TEXT)"
+                "$PRODUCTO_ID DATE, " +
+                "$PRODUCTO_NOMBRE LONG," +
+                "$PRODUCTO_PRECIO TEXT)"
         var insercion_producto_prueba =
-            "INSERT INTO $T_PRODUCTOS ($PRODUCTO_ID,$PRODUCTO_NOMBRE,$PRODUCTO_PRECIO,$PRODUCTO_CATEGORIA) " +
-                    "VALUES (0,'Prueba',0.5,'pincho');"
+            "INSERT INTO $T_PRODUCTOS ($PRODUCTO_ID,$PRODUCTO_NOMBRE,$PRODUCTO_PRECIO) " +
+                    "VALUES (curdate(),'Prueba', '1,2,3');"
         db!!.execSQL(crearTablaPorductos)
         db!!.execSQL(insercion_producto_prueba)
     }
@@ -43,14 +42,14 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
 
-    fun andirProducto(p: Producto)
+    fun andirPedido( id: String, total:Double)
     {
         val db = this.writableDatabase
             val data = ContentValues()
-            data.put(PRODUCTO_ID, p.id)
-            data.put(PRODUCTO_NOMBRE, p.nombre)
-            data.put(PRODUCTO_PRECIO, p.precio)
-            data.put(PRODUCTO_CATEGORIA, p.categoria)
+            data.put(PRODUCTO_ID, "now")
+            data.put(PRODUCTO_NOMBRE, total)
+            data.put(PRODUCTO_PRECIO, id)
+
 
             db.insert(T_PRODUCTOS, null, data)
             db.close()
@@ -63,4 +62,6 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         return cursor
     }
+
+
 }

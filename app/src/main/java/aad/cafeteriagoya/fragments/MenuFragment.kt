@@ -1,46 +1,46 @@
-package aad.cafeteriagoya
+package aad.cafeteriagoya.fragments
 
-import aad.cafeteriagoya.DataProvider.Companion.listaProductos
+import aad.cafeteriagoya.DataProvider
+import aad.cafeteriagoya.R
 import aad.cafeteriagoya.adapter.MenuAdaptador
-import aad.cafeteriagoya.databinding.ActivityMenuBinding
+import aad.cafeteriagoya.databinding.FragmentMenuBinding
 import aad.cafeteriagoya.entidades.Producto
 import aad.cafeteriagoya.sqlite.MiBDOpenHelper
-import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 
-class MenuActivity : AppCompatActivity()
-{/*
-    private lateinit var hora:String
-    var binding:ActivityMenuBinding? = null
+
+class MenuFragment : Fragment() {
+
+    private lateinit var binding: FragmentMenuBinding
     var base: MiBDOpenHelper? = null
-    var lista: ArrayList<Producto> = ArrayList(listaProductos)
+    var lista: ArrayList<Producto> = ArrayList(DataProvider.listaProductos)
+    val precioVM: ViewModelProducto by activityViewModels()
+    lateinit var  producto: Producto
     private lateinit var adapterProductos: MenuAdaptador
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMenuBinding.inflate(layoutInflater)
 
-        base = MiBDOpenHelper(this, null)
 
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        var frag= FragmentMenuBinding.inflate(inflater, container, false)
+        binding=frag
         rellenarSpinner()
 
         iniciarRecicler()
-
-        hora = intent.getStringExtra("hora").toString()
-
         binding?.btFiltrar?.setOnClickListener{
             filtrar()
         }
-
-        /*binding?.btCarrito?.setOnClickListener{
-            mostrarCarrito()
-        }*/
-
-        setContentView(binding!!.root)
+    return binding.root
     }
 
     fun rellenarSpinner()
@@ -48,23 +48,25 @@ class MenuActivity : AppCompatActivity()
         val categorias = arrayOf("Todas", "pincho", "cafe", "refresco", "bocadillo")
 
         var adaptador: ArrayAdapter<String> =
-        ArrayAdapter(this, android.R.layout.simple_spinner_item, categorias)
+            ArrayAdapter(precioVM.getContext(), android.R.layout.simple_spinner_item, categorias)
         binding!!.spinner.adapter = adaptador
     }
+
 
     fun iniciarRecicler()
     {
         val recyclerView = binding?.recyclerView
-        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.layoutManager = LinearLayoutManager(precioVM.getContext())
 
         adapterProductos = MenuAdaptador(
             onClickListener = { pos -> dameID(pos) }
         )
 
-        adapterProductos.MenuAdaptador(this,  lista)
+        adapterProductos.MenuAdaptador(precioVM.getContext(),  lista)
 
         recyclerView?.adapter = adapterProductos
     }
+
 
     fun filtrar()
     {
@@ -85,26 +87,20 @@ class MenuActivity : AppCompatActivity()
         }
         else
         {
-            adapterProductos.productos = ArrayList(listaProductos)
+            adapterProductos.productos = ArrayList(DataProvider.listaProductos)
         }
 
         adapterProductos.notifyDataSetChanged()
     }
 
-
     fun dameID(pos: Int)
     {
-        base?.andirProducto(listaProductos[pos-1])
+        precioVM.productos.add(DataProvider.listaProductos[pos-1])
+
+        //base?.andirProducto(DataProvider.listaProductos[pos-1])
     }
 
 
-    fun mostrarCarrito()
-    {
-        intent = Intent(this, CarritoActivity::class.java).apply{
-            putExtra("hora", hora)
-        }
 
-        startActivity(intent)
-    }
-    */
+
 }
