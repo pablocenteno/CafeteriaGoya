@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
     val imagenView = itemView.findViewById<ImageView>(R.id.imgProducto)
-    var textViewProducto = itemView.findViewById<TextView>(R.id.textoProducto)
-    var textViewPrecio = itemView.findViewById<TextView>(R.id.precioProducto)
+    var textViewProducto = itemView.findViewById<TextView>(R.id.idPedido)
+    var textViewPrecio = itemView.findViewById<TextView>(R.id.precioTotal)
     var button = itemView.findViewById<Button>(R.id.buttonBorrar)
 
     fun render(producto: Producto,

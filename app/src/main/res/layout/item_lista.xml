@@ -17,7 +17,7 @@
         tools:background="@color/black" />
 
     <TextView
-        android:id="@+id/textoProducto"
+        android:id="@+id/idPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/precioProducto"
+        android:id="@+id/precioTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -38,7 +38,7 @@
         android:text="precio"
         app:layout_constraintLeft_toLeftOf="@id/imgProducto"
         app:layout_constraintStart_toEndOf="@+id/imgProducto"
-        app:layout_constraintTop_toBottomOf="@+id/textoProducto" />
+        app:layout_constraintTop_toBottomOf="@+id/idPedido" />
 
     <Button
         android:id="@+id/buttonBorrar"

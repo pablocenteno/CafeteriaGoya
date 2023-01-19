@@ -12,10 +12,9 @@ class CarritoActAdaptador(private val onClickListener: (Int) -> Unit
 ): RecyclerView.Adapter<CarritoActViewHolder>()
 {
     private lateinit var context: Context
-    lateinit var productos: ArrayList<Producto>
     lateinit var cursor: Cursor
 
-    fun CarritoAdaptador(context: Context, cursor: Cursor)
+    fun CarritoActAdaptador(context: Context, cursor: Cursor)
     {
         this.context = context
         this.cursor=cursor
@@ -32,7 +31,7 @@ class CarritoActAdaptador(private val onClickListener: (Int) -> Unit
     override fun onBindViewHolder(holder: CarritoActViewHolder, position: Int)
     {
         cursor.moveToPosition(position)
-        holder.render(cursor.getString(0),cursor.getString(1),onClickListener)
+        holder.render(cursor.getInt(0),cursor.getLong(2),onClickListener)
     }
 
     //Obtenemos el tamaño de la lista

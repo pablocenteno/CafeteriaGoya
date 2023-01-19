@@ -7,23 +7,23 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CarritoActViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
-    var textViewProducto :TextView= itemView.findViewById(R.id.textoProducto)
-    var textViewPrecio :TextView= itemView.findViewById(R.id.precioProducto)
+    var textViewProducto :TextView= itemView.findViewById(R.id.idPedido)
+    var textViewPrecio :TextView= itemView.findViewById(R.id.precioTotal)
     var button = itemView.findViewById<Button>(R.id.buttonBorrar)
 
 
 
     fun render(
-        producto: String,
-        onClickListener1: String,
+        id_pedido: Int,
+        total: Long,
         onClickListener: (Int) -> Unit
     )
     {
-        textViewProducto.text = producto.nombre
-        textViewPrecio.text = producto.precio.toString() + "€"
+        textViewProducto.text = id_pedido.toString()
+        textViewPrecio.text = total.toString() + "€"
 
         button.setOnClickListener {
-            onClickListener(producto.id)
+            onClickListener(id_pedido)
         }
     }
 }

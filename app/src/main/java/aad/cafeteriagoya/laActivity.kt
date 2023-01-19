@@ -58,7 +58,7 @@ class laActivity : AppCompatActivity() {
         transaccion.commit()
     }
 
-    fun insertar(){
+    fun insertar(view: View){
         var id=""
         var total: Double=0.0
         for(producto in productViewModel.productos){
@@ -68,6 +68,9 @@ class laActivity : AppCompatActivity() {
         }
         bd?.andirPedido(id,total)
 
+        intent = Intent(this, CarritoActivity::class.java)
+
+        startActivity(intent)
 
 
     }

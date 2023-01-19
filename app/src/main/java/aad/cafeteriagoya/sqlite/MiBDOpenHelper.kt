@@ -27,12 +27,12 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
     override fun onCreate(db: SQLiteDatabase?) {
         var crearTablaPorductos = "CREATE TABLE $T_PRODUCTOS " +
                 "($PRODUCTO_INSERCION_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$PRODUCTO_ID DATE, " +
+                "$PRODUCTO_ID DATETIME, " +
                 "$PRODUCTO_NOMBRE LONG," +
                 "$PRODUCTO_PRECIO TEXT)"
         var insercion_producto_prueba =
             "INSERT INTO $T_PRODUCTOS ($PRODUCTO_ID,$PRODUCTO_NOMBRE,$PRODUCTO_PRECIO) " +
-                    "VALUES (curdate(),'Prueba', '1,2,3');"
+                    "VALUES ('curdate()',234, '1,2,3');"
         db!!.execSQL(crearTablaPorductos)
         db!!.execSQL(insercion_producto_prueba)
     }
@@ -58,10 +58,16 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun obtenerCarrito(): Cursor
     {
         val db= this.readableDatabase
-        var cursor = db.rawQuery("SELECT * FROM ${MiBDOpenHelper.T_PRODUCTOS}", null)
+        var cursor = db.rawQuery("SELECT * FROM ${MiBDOpenHelper.T_PRODUCTOS} ", null)
 
         return cursor
     }
+    fun obtenerUnPedido(id: Int): Cursor
+    {
+        val db= this.readableDatabase
+        var cursor = db.rawQuery("SELECT * FROM ${MiBDOpenHelper.T_PRODUCTOS} where $PRODUCTO_INSERCION_ID=id", null)
 
+        return cursor
+    }
 
 }
