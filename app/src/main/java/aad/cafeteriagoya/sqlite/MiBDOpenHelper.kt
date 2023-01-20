@@ -45,14 +45,18 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun andirPedido( id: String, total:Double)
     {
         val db = this.writableDatabase
-            val data = ContentValues()
+          val data = ContentValues()
+
             data.put(PRODUCTO_ID, "now")
             data.put(PRODUCTO_NOMBRE, total)
             data.put(PRODUCTO_PRECIO, id)
-
-
-            db.insert(T_PRODUCTOS, null, data)
+             db.insert(T_PRODUCTOS, null, data)
             db.close()
+       /*var insercion_producto_prueba =
+            "INSERT INTO $T_PRODUCTOS ($PRODUCTO_ID,$PRODUCTO_NOMBRE,$PRODUCTO_PRECIO) " +
+                    "VALUES ('curdate()',total, 'id');"
+        db!!.execSQL(insercion_producto_prueba)*/
+
     }
 
     fun obtenerCarrito(): Cursor
@@ -65,9 +69,8 @@ class MiBDOpenHelper(contex: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun obtenerUnPedido(id: Int): Cursor
     {
         val db= this.readableDatabase
-        var cursor = db.rawQuery("SELECT * FROM ${MiBDOpenHelper.T_PRODUCTOS} where $PRODUCTO_INSERCION_ID=id", null)
 
-        return cursor
+        return db.rawQuery("SELECT * FROM ${MiBDOpenHelper.T_PRODUCTOS} where $PRODUCTO_INSERCION_ID='$id'", null)
     }
 
 }

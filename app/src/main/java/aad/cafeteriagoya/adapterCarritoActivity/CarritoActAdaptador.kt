@@ -24,7 +24,7 @@ class CarritoActAdaptador(private val onClickListener: (Int) -> Unit
     {
         val layoutInflater = LayoutInflater.from(parent.context)
 
-        return CarritoActViewHolder(layoutInflater.inflate(R.layout.item_carrito, parent, false))
+        return CarritoActViewHolder(layoutInflater.inflate(R.layout.item_actcarrito, parent, false))
     }
 
     //Renederizamos cada elemento de la lista

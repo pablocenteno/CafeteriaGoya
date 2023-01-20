@@ -23,17 +23,18 @@ class CarritoActivity : AppCompatActivity()
 
         hora = intent.getStringExtra("hora").toString()
         iniciarRecycler()
-        mostrarCarrito()
+        //mostrarCarrito()
 
         binding?.btInicio?.setOnClickListener{
             volverCasa()
         }
+        base = MiBDOpenHelper(this,null)
 
         setContentView(binding!!.root)
     }
 
 
-    fun mostrarCarrito()
+   /* fun mostrarCarrito()
     {
         var base = MiBDOpenHelper(this, null)
 
@@ -50,7 +51,7 @@ class CarritoActivity : AppCompatActivity()
             cursor.moveToNext()
         }
 
-    }
+    }*/
 
 
     fun volverCasa()

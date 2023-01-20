@@ -26,7 +26,7 @@ class laActivity : AppCompatActivity() {
         binding = ActivityLaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         productViewModel.setContext(this)
-
+        bd = MiBDOpenHelper(this,null)
 
     }
 
